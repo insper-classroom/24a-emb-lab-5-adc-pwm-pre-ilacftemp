@@ -26,30 +26,23 @@ void data_task(void *p) {
 
 void process_task(void *p) {
     int data = 0;
-    int janela[5];
+    int janela[5] = {0};
     int cont = 0;
     int y = 0;
 
     while (true) {
         if (xQueueReceive(xQueueData, &data, 100)) {
-            // printf("%d\n", data);
-            // implementar filtro aqui!
-            if(cont < 5){
-                janela[cont] = data;
-                cont++;
-            } else {
-                for(int i = 1; i < 5; i++){
-                    janela[i-1] = janela[i];
-                    y += janela[i-1]/5;
-                }
-                janela[4] = data;
-                y += janela[4]/5;
-                if((abs(data-y) > 5)){
-                    data = y;
-                }
+            for(int i = 1; i < 5; i++){
+                janela[i-1] = janela[i];
+                y += janela[i-1]/5;
             }
-            y = 0;
+            janela[4] = data;
+            y += janela[4]/5;
+            if((abs(data-y) > 5)){
+                data = y;
+            }
             printf("%d\n", data);
+            y = 0;
 
             // deixar esse delay!
             vTaskDelay(pdMS_TO_TICKS(50));
