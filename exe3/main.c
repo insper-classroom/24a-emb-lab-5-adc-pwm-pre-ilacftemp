@@ -34,10 +34,11 @@ void process_task(void *p) {
         if (xQueueReceive(xQueueData, &data, 100)) {
             for(int i = 1; i < 5; i++){
                 janela[i-1] = janela[i];
-                y += janela[i-1]/5;
+                y += janela[i-1];
             }
             janela[4] = data;
-            y += janela[4]/5;
+            y += janela[4];
+            y /= 5;
             if((abs(data-y) > 5)){
                 data = y;
             }
