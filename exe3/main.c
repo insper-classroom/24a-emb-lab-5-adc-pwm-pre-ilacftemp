@@ -39,7 +39,7 @@ void process_task(void *p) {
             janela[4] = data;
             y += janela[4];
             y /= 5;
-            if((abs(data-y) > 5)){
+            if((abs(data-y) > 15)){
                 data = y;
             }
             printf("%d\n", data);
